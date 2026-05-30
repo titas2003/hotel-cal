@@ -18,9 +18,11 @@ exports.getRooms = async (req, res, next) => {
       query.type = req.query.type;
     }
 
-    // Filter by status
+    // Filter by status (defaults to Available for public guest queries unless 'all' is passed)
     if (req.query.status) {
       query.status = req.query.status;
+    } else if (req.query.all !== 'true') {
+      query.status = 'Available';
     }
 
     const rooms = await Room.find(query).populate('hotel', 'name city').populate('amenities');

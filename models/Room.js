@@ -28,6 +28,26 @@ const RoomSchema = new mongoose.Schema({
     enum: ['Available', 'Occupied', 'Under Maintenance'],
     default: 'Available'
   },
+  images: {
+    type: [String],
+    validate: {
+      validator: function(v) {
+        return v && v.length >= 1;
+      },
+      message: 'A room must have at least 1 image.'
+    },
+    required: [true, 'Please add at least 1 room image']
+  },
+  maintenanceReason: {
+    type: String,
+    default: ''
+  },
+  maintenanceStart: {
+    type: Date
+  },
+  maintenanceEnd: {
+    type: Date
+  },
   amenities: [
     {
       type: mongoose.Schema.ObjectId,
